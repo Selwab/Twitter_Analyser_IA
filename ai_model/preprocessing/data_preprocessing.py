@@ -3,8 +3,8 @@ import pandas as pd
 import re
 import nltk
 from nltk.tokenize import word_tokenize
-from nltk.tag import pos_tag
 from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
 
 # Downloads
 nltk.download('punkt')
@@ -39,6 +39,13 @@ def remove_stopwords(tokens):
             res.append(word)
     return res
 
+def lematize(tokens):
+    lematizer = WordNetLemmatizer()
+    res = []
+    for word in tokens:    
+        res.append(lematizer.lemmatize(word))
+    return res
+
 # Delete Hashtags
 df['text'] = df['text'].apply(remove_hashtags)
 print("No HASH \n", df['text'].iloc[11])
@@ -56,3 +63,7 @@ print("Del POS: \n", df['tokens'].iloc[1])
 # Stopwords
 df['tokens'] = df['tokens'].apply(remove_stopwords)
 print("Del STOP: \n", df['tokens'].iloc[0:9])
+
+# Lematization
+df['tokens'] = df['tokens'].apply(lematize)
+print("Lem Tokens: \n", df['tokens'].iloc[9])
