@@ -27,21 +27,23 @@ def removeSingleCharacters(tweet):
     pattern = r"\s.\s"
     return re.sub(pattern, " ", tweet)
 
-# Remove extra escape characters for not valid unicode representations
-
-def removeExtraEscapeCharacters(tweet):
-    pattern = r"\\(?!u)."
-    return re.sub(pattern, "", tweet)
-
-# Replace the unicode escape sequence by the actual character
+# Replace unicode sequences
 
 def replaceUnicodeEscapeSequence(tweet):
-    return tweet.encode('utf-8').decode('utf-8')
+    replacements = {
+        r'\\u2019': "'",
+        r'\\u002c': ",",
+    }
+    
+    for unicode_char, replacement in replacements.items():
+        tweet = re.sub(unicode_char, replacement, tweet)
+    
+    return tweet
 
 # Remove specific special characters
 
 def removeSpecialCharacters(tweet):
-    pattern = "[\"#\-,%&'’\.$:\(\)\*\+/\[\]\<\>]+"
+    pattern = r"[\"#\-,%&'’\.$:\(\)\*\+/\[\]\<\>\\]+"
     return re.sub(pattern, "", tweet)
 
 # Remove numbers
@@ -58,7 +60,7 @@ def removeTags(tweet):
 
 # Decode HTML entities
 
-def decode_html_entities(tweet):
+def decodeHTMLEntities(tweet):
     decoded_string = unescape(tweet)
     return decoded_string
 
@@ -87,9 +89,8 @@ def spell_check(tweet):
 
 def preprocessTweet(tweet):
     tweet = tweet.lower()
-    tweet = removeExtraEscapeCharacters(tweet)
     tweet = replaceUnicodeEscapeSequence(tweet)
-    tweet = decode_html_entities(tweet)
+    tweet = decodeHTMLEntities(tweet)
     tweet = removeTags(tweet)
     tweet = removeNumbers(tweet)
     tweet = emojis2Text(tweet)
@@ -99,8 +100,5 @@ def preprocessTweet(tweet):
     return tweet
 
 
-df['text'] = df['text'].apply(preprocessTweet)
+#df['text'] = df['text'].apply(preprocessTweet)
 #df.to_csv('data.csv', index=False)
-
-
-print(corrected_words)
