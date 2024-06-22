@@ -1,13 +1,23 @@
 # Preprocessing
 import pandas as pd
 import re
+import nltk
 from html import unescape
 from spellchecker import SpellChecker
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
 
-spell = SpellChecker()
+# Downloads
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('stopwords')
+nltk.download('wordnet')
 
 data = 'ai_model\preprocessing\SentimentTrain.csv'
 df = pd.read_csv(data)
+
+spell = SpellChecker()
 
 def emojis2Text(tweet):
     emojis = {
@@ -65,9 +75,8 @@ def decodeHTMLEntities(tweet):
     return decoded_string
 
 # Spell check
-corrected_words = {}
 
-def spell_check(tweet):
+def spell_check(tweet, corrected_words):
   corrected_text = ""
 
   for word in tweet.split():
@@ -85,10 +94,54 @@ def spell_check(tweet):
 
   return corrected_text
 
+# Remove hashtags
+
+def remove_hashtags(text):
+    text = re.sub(r'\s*#\w+\b\s*$', '', text)
+    text = re.sub(r'\b\s*#(\w+)', r'\1', text)
+    text = re.sub(r'^\#(\w+)\b\s*', r'\1', text)
+    return text
+
+# Tokenize
+
+def tokenize(text):
+    return word_tokenize(text)
+
+# Remove names and possesive terminations
+
+def remove_NNP_and_POS(tweet):
+    res = ""
+    tagged_words = nltk.pos_tag(tweet.split())
+    for word, pos in tagged_words:
+        if pos != 'NNP' and pos != 'POS':
+            res += word + " "
+    return res
+
+# Remove stopwords
+
+def remove_stopwords(tweet):
+    res = ""
+    stopwords_list = stopwords.words('english')
+    for word in tweet.split():
+        if word.lower() not in stopwords_list:
+            res += word + " "
+    return res
+
+# Lemmatize
+
+def lemmatize(tweet):
+    lemmatizer = WordNetLemmatizer()
+    res = ""
+    for word in tweet.split():  
+        res += lemmatizer.lemmatize(word) + " "
+    return res
+
 # Preprocess the tweet
 
 def preprocessTweet(tweet):
+    corrected_words = {}
     tweet = tweet.lower()
+    tweet = remove_NNP_and_POS(tweet)
     tweet = replaceUnicodeEscapeSequence(tweet)
     tweet = decodeHTMLEntities(tweet)
     tweet = removeTags(tweet)
@@ -96,9 +149,14 @@ def preprocessTweet(tweet):
     tweet = emojis2Text(tweet)
     tweet = removeSpecialCharacters(tweet)
     tweet = removeSingleCharacters(tweet)
-    #tweet = spell_check(tweet) # Need to be executed only once, since it takes a very long time
+    #tweet = spell_check(tweet, corrected_words) # Need to be executed only once, since it takes a very long time
+    tweet = remove_hashtags(tweet)
+    tweet = remove_stopwords(tweet)
+    tweet = lemmatize(tweet)
     return tweet
-
 
 #df['text'] = df['text'].apply(preprocessTweet)
 #df.to_csv('data.csv', index=False)
+
+# Tokenization
+#df['tokens'] = df['text'].apply(tokenize)
