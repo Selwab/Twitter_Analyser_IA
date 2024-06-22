@@ -3,9 +3,13 @@ import pandas as pd
 import re
 import nltk
 from nltk.tokenize import word_tokenize
+from nltk.tag import pos_tag
+from nltk.corpus import stopwords
 
 # Downloads
 nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('stopwords')
 
 data = 'ai_model\preprocessing\SentimentTrain.csv'
 df = pd.read_csv(data)
@@ -27,6 +31,14 @@ def remove_NNP_and_POS(tokens):
             res.append(word)
     return res
 
+def remove_stopwords(tokens):
+    res = []
+    stopwords_list = stopwords.words('english')
+    for word in tokens:
+        if word.lower() not in stopwords_list:
+            res.append(word)
+    return res
+
 # Delete Hashtags
 df['text'] = df['text'].apply(remove_hashtags)
 print("No HASH \n", df['text'].iloc[11])
@@ -40,3 +52,7 @@ print("All Tokens: \n", df['tokens'].iloc[1])
 #Remove proper nouns and possessive endings
 df['tokens'] = df['tokens'].apply(remove_NNP_and_POS)
 print("Del POS: \n", df['tokens'].iloc[1])
+
+# Stopwords
+df['tokens'] = df['tokens'].apply(remove_stopwords)
+print("Del STOP: \n", df['tokens'].iloc[0:9])
