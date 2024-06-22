@@ -2,6 +2,9 @@
 import pandas as pd
 import re
 from html import unescape
+from spellchecker import SpellChecker
+
+spell = SpellChecker()
 
 data = 'ai_model\preprocessing\SentimentTrain.csv'
 df = pd.read_csv(data)
@@ -59,9 +62,31 @@ def decode_html_entities(tweet):
     decoded_string = unescape(tweet)
     return decoded_string
 
+# Spell check
+corrected_words = {}
+
+def spell_check(tweet):
+  corrected_text = ""
+
+  for word in tweet.split():
+    word = word.lower() 
+    if word not in corrected_words:
+      correction = spell.correction(word)
+    
+      if correction is not None:
+        corrected_words[word] = correction
+        corrected_text += spell.correction(word) + " "
+      else:
+        corrected_text += word + " "
+    else:
+      corrected_text += corrected_words[word] + " "
+
+  return corrected_text
+
 # Preprocess the tweet
 
 def preprocessTweet(tweet):
+    tweet = tweet.lower()
     tweet = removeExtraEscapeCharacters(tweet)
     tweet = replaceUnicodeEscapeSequence(tweet)
     tweet = decode_html_entities(tweet)
@@ -70,6 +95,7 @@ def preprocessTweet(tweet):
     tweet = emojis2Text(tweet)
     tweet = removeSpecialCharacters(tweet)
     tweet = removeSingleCharacters(tweet)
+    #tweet = spell_check(tweet) # Need to be executed only once, since it takes a very long time
     return tweet
 
 
@@ -77,3 +103,4 @@ df['text'] = df['text'].apply(preprocessTweet)
 #df.to_csv('data.csv', index=False)
 
 
+print(corrected_words)
