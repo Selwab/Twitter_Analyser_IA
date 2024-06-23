@@ -15,16 +15,22 @@ df2 = pd.DataFrame(
     }
 )
 
+sentiments = {
+  'negative' : 0,
+  'positive' : 2,
+  'neutral' : 1
+}
+
 for row in df.iterrows():
-  if row[1]['label'] == 0 and negatives < max_sentiment_samples :
+  if row[1]['label'] == sentiments['negative'] and negatives < max_sentiment_samples :
     negatives += 1
-    df2 = df2._append({'text': row[1]['text'], 'label': row[1]['label']}, ignore_index=True)
-  elif row[1]['label'] == 2 and positives < max_sentiment_samples :
+    df2 = df2._append({'text': row[1]['text'], 'label': sentiments['negative']}, ignore_index=True)
+  elif row[1]['label'] == sentiments['positive'] and positives < max_sentiment_samples :
     positives += 1
-    df2 = df2._append({'text': row[1]['text'], 'label': row[1]['label']}, ignore_index=True)
-  elif row[1]['label'] == 1 and neutrals < max_sentiment_samples:
+    df2 = df2._append({'text': row[1]['text'], 'label': sentiments['positive'] }, ignore_index=True)
+  elif row[1]['label'] == sentiments['neutral'] and neutrals < max_sentiment_samples:
     neutrals += 1
-    df2 = df2._append({'text': row[1]['text'], 'label': row[1]['label']}, ignore_index=True)
+    df2 = df2._append({'text': row[1]['text'], 'label': sentiments['neutral']}, ignore_index=True)
 
   if neutrals >= max_sentiment_samples and positives >= max_sentiment_samples and negatives >= max_sentiment_samples:
     break
