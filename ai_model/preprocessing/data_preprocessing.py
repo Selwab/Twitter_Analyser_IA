@@ -2,6 +2,7 @@
 import pandas as pd
 import re
 import nltk
+import contractions
 from html import unescape
 from spellchecker import SpellChecker
 from nltk.tokenize import word_tokenize
@@ -102,6 +103,12 @@ def remove_hashtags(text):
     text = re.sub(r'^\#(\w+)\b\s*', r'\1', text)
     return text
 
+# Expanding contractions
+def expand_contractions(text):
+    expanded_words = [contractions.fix(word) for word in text.split()]
+    expanded_text = ' '.join(expanded_words)
+    return expanded_text
+
 # Tokenize
 
 def tokenize(text):
@@ -142,6 +149,7 @@ def preprocessTweet(tweet):
     corrected_words = {}
     tweet = tweet.lower()
     tweet = remove_NNP_and_POS(tweet)
+    tweet = expand_contractions(tweet)
     tweet = replaceUnicodeEscapeSequence(tweet)
     tweet = decodeHTMLEntities(tweet)
     tweet = removeTags(tweet)
