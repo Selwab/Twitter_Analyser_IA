@@ -1,0 +1,10 @@
+<div class="home">
+    <h2>Post a Tweet</h2>
+    <textarea [(ngModel)]="contentInput" placeholder="What's happening?" rows="4" cols="50"></textarea>
+    <br>
+    <button (click)="postTweet()">Post Tweet</button>
+
+    <h3>TWEET POSTS: </h3>
+    <app-tweet-list [tweetsList]="tweetsList"></app-tweet-list>
+</div>
+

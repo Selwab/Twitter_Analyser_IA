@@ -1,0 +1,30 @@
+<form>
+    <div class="tweet-containter">
+        <div class="profile-picture">
+            <img src="assets/profile1.jpeg" alt="Foto de perfil">
+        </div>
+        <div class="tweet-body">
+            <div class="tweet-header">
+                <div class="username">
+                    <span>user</span>
+                    <span class="date">{{ tweet.date }} </span>
+                </div>
+            </div>
+            <div class="content">{{ tweet.content }}</div>
+            <!--<div class="tweet-footer">
+              <span class="tweet-code">Código: {{ tweet.code }}</span>
+              <span class="tweet-sentiment">Sentimiento: {{ tweet.sentimentID }}</span>
+            </div>-->
+        </div>    
+    </div>
+      
+</form>
+
+<!--<div class="profile-picture">
+    <img [src]="tweetData.author_id" alt="Foto de perfil">
+  </div>
+  <div class="tweet-content">
+    <div class="username">{{ tweetData.author_id }}</div>
+    <div class="text">{{ tweetData.text }}</div>
+    <div class="timestamp">{{ tweetData.created_at }}</div>
+  </div>-->
