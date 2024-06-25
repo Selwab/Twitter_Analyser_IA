@@ -1,0 +1,96 @@
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0;
+    border-radius: 16px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    
+}
+
+.tweet-containter {
+    display: flex;
+    align-items: flex-start;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #e1e8ed;
+  }
+
+  .profile-picture {
+    flex: 0 0 auto;
+    margin-right: 10px;
+  }
+
+  .profile-picture img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    overflow: hidden;
+  }
+
+.tweet-body {
+    flex: 1; /* El cuerpo del tweet ocupa todo el espacio restante */
+    display: flex;
+    flex-direction: column; /* Alinea el contenido en una columna */
+  }
+
+  .tweet-header {
+    display: flex;
+    align-items: center; /* Alinea verticalmente el contenido del encabezado */
+    margin-bottom: 5px;
+  }
+  
+  .username {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .date {
+    color: #888;
+    font-size: 14px;
+    margin-left: 8px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .content {
+    margin-top: 0;
+    margin-bottom: 5px;
+    white-space: pre-wrap;
+    font-size: 18px;
+    line-height: 1.5;
+    color: #14171a;
+    font-family: "Segoe UI", sans-serif; 
+  }
+
+  .sent-image img {
+    max-width: 50%;
+    border-radius: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .tweet-footer {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #8899a6;
+}
+
+/* Añadir estilos adicionales para alineación y espaciado */
+.tweet-footer span {
+    margin-right: 15px;
+}
+
+.tweet-footer .tweet-sentiment {
+    font-weight: bold;
+    color: #1da1f2; /* Color de Twitter */
+}
+
