@@ -1,33 +1,49 @@
 from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
-import click
-import sqlalchemy
+from flask_cors import CORS
 from datetime import datetime
-from sqlalchemy.orm import DeclarativeBase
-from models import db, Tweet
+from models import db, Tweet, Image
 from seeds import *
+import random
 
 app = Flask(__name__) 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tweets.db'
+CORS(app, resources={r"/*": {"origins": "http://localhost:4200"}})
 
 db.init_app(app)
+
+def get_image_url(image_id):
+    image = db.session.execute(db.select(Image).where(Image.id==image_id)).scalar_one()
+    return image.url
+
+def get_random_image_by_sentiment(sentiment_id):
+    images = db.session.execute(db.select(Image).where(Image.sentiment_id==sentiment_id)).scalars().all()
+    random_index = random.randint(0, len(images)-1)
+    return images[random_index].id
 
 @app.route('/tweet', methods=['POST'])
 def save_tweet():
     data = request.get_json()
 #    predicted_sentiment = model.predict([data['text']])
-#    random_image =  get_random_image_by_sentiment(predicted_sentiment)
+    predicted_sentiment=1
+    random_image =  get_random_image_by_sentiment(predicted_sentiment)
     new_tweet = Tweet(
         text=data['text'],
         time=datetime.fromisoformat(data['time']),
-        sentiment_id=data['sentiment'],
-        #sentiment_id=predicted_sentiment,
-        image_id=data['image'],
-        #image_id=random_image
+        sentiment_id=predicted_sentiment,
+        image_id=random_image
         )
     db.session.add(new_tweet)
     db.session.commit()
-    return jsonify({'message': 'Tweet saved!'}), 201
+
+    tweet_dto = {
+        'id': new_tweet.id,
+        'text': new_tweet.text,
+        'sentiment_id': new_tweet.sentiment_id,
+        'image_url': get_image_url(new_tweet.image_id),
+        'time': new_tweet.time
+    }
+
+    return jsonify(tweet_dto), 201
 
 @app.route('/tweets', methods=['GET'])
 def get_all_tweets():
@@ -55,3 +71,4 @@ if __name__ == '__main__':
         seed_sentiment_table(db)    
         seed_image_table(db)
     app.run(debug=True, port=8000)
+
