@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject, Injectable } from '@angular/core';
 import { FormsModule, NgModel, ReactiveFormsModule}   from '@angular/forms';
 import { Tweet } from '../interfaces/tweet';
 import { CommonModule } from '@angular/common';
@@ -10,6 +10,12 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 
+import {environment} from '../../environment';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root'
+})
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -23,12 +29,18 @@ import {MatSelectModule} from '@angular/material/select';
     MatNativeDateModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    HttpClientModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  
+  constructor(
+    private http: HttpClient
+  ){}
+
   tweetsList: Tweet[] = [];
   filteredTweets: Tweet[] = [];
   tweetContent: string = '';
@@ -40,45 +52,36 @@ export class HomeComponent {
   private negativeImages = ['assets/sentiments/negative/1.jpg', 'assets/sentiments/negative/2.jpg', 'assets/sentiments/negative/3.jpg', 'assets/images/negative/4.jpg'];
 
   postTweet() {
-    const sentimentID = Math.floor(Math.random() * 3); // 0: Positive, 1: Neutral, 2: Negative
-    const imageURL = this.getRandomImage(sentimentID);
-
-    const newTweet: Tweet = {
-      code: 1,
-      content: this.contentInput,
-      sentimentID: 0,
-      imageURL: imageURL,
-      hour: new Date(),
-      date: new Date()
+    const payload = {
+      text: this.contentInput,
+      time: new Date(),
     }
 
-    this.tweetsList.push(newTweet);
-    this.tweetContent = this.contentInput;
-    this.contentInput = '';
-    console.log("Posted Tweets: ", newTweet);
+    this.http.post(`${environment.apiUrl}/tweet`, payload).subscribe((saved_tweet:any) => {
+      const newTweet: Tweet = {
+        id: saved_tweet.id,
+        text: saved_tweet.text,
+        sentiment_id: saved_tweet.sentiment_id,
+        image_url: saved_tweet.image_url,
+        time: new Date(),
+      }
+  
+      this.tweetsList.push(newTweet);
+      this.tweetContent = this.contentInput;
+      this.contentInput = '';
+      console.log("Posted Tweets: ", saved_tweet);
+    });
+
   }
 
   filterTweets() {
     console.log("Selected Sentiment:", this.selectedSentiment);
     this.filteredTweets = [];
     for (const tweet of this.tweetsList) {
-      if (tweet.sentimentID == this.selectedSentiment) {
+      if (tweet.sentiment_id == this.selectedSentiment) {
         this.filteredTweets.push(tweet);
       }
     }
     console.log("Filtered Tweets: ", this.filteredTweets);
-  }
-
-  getRandomImage(sentimentID: number): string {
-    switch (sentimentID) {
-      case 0:
-        return this.positiveImages[Math.floor(Math.random() * this.positiveImages.length)];
-      case 1:
-        return this.neutralImages[Math.floor(Math.random() * this.neutralImages.length)];
-      case 2:
-        return this.negativeImages[Math.floor(Math.random() * this.negativeImages.length)];
-      default:
-        return '';
-    }
   }
 }

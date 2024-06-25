@@ -1,8 +1,7 @@
 export interface Tweet {
-    code: number;
-    content: string;
-    sentimentID: number;
-    imageURL: string;
-    hour: Date;
-    date: Date;
+    id: number;
+    text: string;
+    time: Date;
+    sentiment_id: number;
+    image_url: string;
 }
