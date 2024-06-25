@@ -1,10 +1,50 @@
-<div class="home">
-    <h2>Post a Tweet</h2>
-    <textarea [(ngModel)]="contentInput" placeholder="What's happening?" rows="4" cols="50"></textarea>
-    <br>
-    <button (click)="postTweet()">Post Tweet</button>
-
-    <h3>TWEET POSTS: </h3>
-    <app-tweet-list [tweetsList]="tweetsList"></app-tweet-list>
+<div class="title">
+    <img src="assets/icon.jpg" alt="Icon">
 </div>
 
+<div class="tab-group">
+    <mat-tab-group>
+        <div class="home">
+            <mat-tab >
+                <ng-template mat-tab-label>
+                  <mat-icon fontIcon="home"></mat-icon>
+                  Home
+                </ng-template>
+                <div class="home-content">
+                    <div class="profile-picture">
+                        <img src="assets/profile1.jpeg" alt="Foto de perfil">
+                    </div>
+                    <div class="input-area">
+                        <textarea [(ngModel)]="contentInput" placeholder="What's happening?" rows="4" cols="50"></textarea>
+                        <button (click)="postTweet()">Post Tweet</button>
+                    </div>
+                </div>
+                    <h3>TWEET POSTS: </h3>
+                    <app-tweet-list [tweetsList]="tweetsList"></app-tweet-list>
+            </mat-tab>
+        </div>
+      
+        <div class="filter">
+            <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon fontIcon="menu"></mat-icon>
+            Filter
+          </ng-template>
+          <div class="filter-content">
+            <h4>Filter Tweet by Sentiments</h4>
+            <mat-form-field>
+                <mat-label>Choose an option</mat-label>
+                <mat-select [(ngModel)]="selectedSentiment" (ngModelChange)="filterTweets()">
+                    <mat-option value="0">Positive</mat-option>
+                    <mat-option value="1">Neutral</mat-option>
+                    <mat-option value="2">Negative</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <h3>TWEET POSTS: </h3>
+            <app-tweet-list [tweetsList]="filteredTweets"></app-tweet-list>
+          </div>
+          
+        </mat-tab>
+        </div>
+      </mat-tab-group>
+</div>

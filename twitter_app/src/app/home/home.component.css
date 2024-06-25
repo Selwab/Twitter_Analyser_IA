@@ -1,32 +1,117 @@
-.home-container {
-    text-align: center;
-    padding: 20px;
+/* Title */
+.title {
+    padding: 30px;
+    color: #1d9bf0;
+    background: linear-gradient(135deg, #c3ecf6, #f1f1f1);
+    border-radius: 0px;
+    margin: 20px 0;
+  }
+
+  .title img {
+    width: 9%;
+    height: 90px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
   }
   
-  textarea {
-    width: 80%;
+/* Home Content */
+
+.home-content {
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
     padding: 10px;
-    font-size: 16px;
+    /*border: 1px solid #1d9bf0;*/
+    margin: 20px auto;
+    
+}
+
+.profile-picture {
+    flex: 0 0 auto;
+    margin-top: 10px;
+    align-self: flex-start;
+}
+
+  .profile-picture img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    overflow: hidden;
+  }
+
+  .input-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    margin-left: 5px;
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+
+}
+
+  textarea {
+    flex: 1;
+    padding: 15px;
+    font-size: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    resize: none;
+    margin: 10px;
+    outline: none;
   }
   
   button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+    padding: 12px 20px;
+    font-size: 18px;
     border-radius: 18px;
     border: none;
     background-color: #1d9bf0;
     color: #fff;
     cursor: pointer;
     transition: background-color 0.1s;
-  }
+    margin-left: auto; /* Asegura espacio entre el textarea y el botón */
+    outline: none;
+}
   
   button:hover {
     background-color: #ddd;
+    border: none;
   }
   
   h3 {
     margin-top: 30px;
   }
+
+  .trends-section {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    max-width: 200px;
+  }
   
+  .trends-section h3 {
+    margin-bottom: 10px;
+  }
+  
+  .trend {
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  /* Tab Group */
+
+  .tab-group {
+    background-color: white;
+    padding: 10px;
+  }
