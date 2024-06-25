@@ -2,6 +2,27 @@
     <img src="assets/icon.jpg" alt="Icon">
 </div>
 
+<!--
+<div class="tab-group">
+    <button class="tab-button active" onclick="openTab(event, 'tab1')">Tab 1</button>
+    <button class="tab-button" onclick="openTab(event, 'tab2')">Tab 2</button>
+  
+    <div id="tab1" class="tab-content active">
+      <h3>Contenido del Tab 1</h3>
+      <p>Este es el contenido del primer tab.</p>
+    </div>
+  
+    <div id="tab2" class="tab-content">
+      <h3>Contenido del Tab 2</h3>
+      <p>Este es el contenido del segundo tab.</p>
+    </div>
+  
+    <div id="tab3" class="tab-content">
+      <h3>Contenido del Tab 3</h3>
+      <p>Este es el contenido del tercer tab.</p>
+    </div>
+  </div>
+-->
 <div class="tab-group">
     <mat-tab-group>
         <div class="home">
@@ -19,7 +40,6 @@
                         <button (click)="postTweet()">Post Tweet</button>
                     </div>
                 </div>
-                    <h3>TWEET POSTS: </h3>
                     <app-tweet-list [tweetsList]="tweetsList"></app-tweet-list>
             </mat-tab>
         </div>
@@ -40,11 +60,10 @@
                     <mat-option value="2">Negative</mat-option>
                 </mat-select>
             </mat-form-field>
-            <h3>TWEET POSTS: </h3>
             <app-tweet-list [tweetsList]="filteredTweets"></app-tweet-list>
           </div>
           
         </mat-tab>
         </div>
       </mat-tab-group>
-</div>
+</div>>
