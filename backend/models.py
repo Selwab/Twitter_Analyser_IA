@@ -36,4 +36,11 @@ class Tweet(db.Model):
         return f'<Tweet {self.text[:20]}>'
     
     def to_dict(self):
-        return {'id': self.id, 'name': self.name}
+         return {
+            'id': self.id,
+            'text': self.text,
+            'time': self.time.isoformat(),
+            'sentiment_id': self.sentiment_id,
+            'image_id': self.image_id
+        }
+
