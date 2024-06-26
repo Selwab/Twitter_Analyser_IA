@@ -13,7 +13,7 @@ form {
     align-items: flex-start;
     padding: 15px;
     margin-bottom: 10px;
-    background-color: #f9f9f9;
+    background-color: #f7f7f7;
     border-bottom: 1px solid #e1e8ed;
   }
 
@@ -45,19 +45,22 @@ form {
   
   .username {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 20px;
     margin-bottom: 5px;
     display: flex;
     align-items: center;
     gap: 5px;
+    font-family: "Segoe UI", sans-serif; 
   }
   
   .date {
-    color: #888;
-    font-size: 14px;
-    margin-left: 8px;
+    color: #9fa8af;
+    font-size: 16px;
+    margin-left: 5px;
     display: inline-block;
     vertical-align: middle;
+    font-family: "Segoe UI", sans-serif; 
+    font-weight: 300;
   }
 
   .content {
@@ -86,11 +89,13 @@ form {
 
 /* Añadir estilos adicionales para alineación y espaciado */
 .tweet-footer span {
-    margin-right: 15px;
+    margin: 15px;
 }
 
 .tweet-footer .tweet-sentiment {
-    font-weight: bold;
-    color: #1da1f2; /* Color de Twitter */
+    font-size: 20px;
+    font-weight: 650;
+    color: #1da1f2;
+    font-family: "Segoe UI", sans-serif; 
 }
 

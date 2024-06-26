@@ -24,7 +24,7 @@ def get_random_image_by_sentiment(sentiment_id):
 def save_tweet():
     data = request.get_json()
 #    predicted_sentiment = model.predict([data['text']])
-    predicted_sentiment=1
+    predicted_sentiment=2
     random_image =  get_random_image_by_sentiment(predicted_sentiment)
     new_tweet = Tweet(
         text=data['text'],

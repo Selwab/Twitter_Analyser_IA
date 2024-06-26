@@ -7,7 +7,7 @@ import { TweetListComponent } from '../tweet-list/tweet-list.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTabsModule} from '@angular/material/tabs';
 import { MatNativeDateModule } from '@angular/material/core';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatFormFieldModule, MatFormFieldControl} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 
 import {environment} from '../../environment';
@@ -76,6 +76,7 @@ export class HomeComponent {
   get_all_tweets() {
     this.http.get<Tweet[]>(`${environment.apiUrl}/tweets`).subscribe((tweets) => {
       console.log("Id: ", tweets);
+      tweets.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
       this.tweetsList = tweets;
       console.log("Fetched Tweets: ", this.tweetsList);
     });

@@ -44,6 +44,10 @@ def seed_image_table(db):
                 url="https://ih1.redbubble.net/image.2595320116.9420/flat,750x,075,f-pad,750x1000,f8f8f8.jpg",
                 sentiment_id=2
                 ),
+            Image(
+                url="https://i.pinimg.com/564x/f0/2b/ed/f02bed84317f6e41a5b0118348173512.jpg",
+                sentiment_id=2
+                ),
             # Negative
             Image(
                 url="https://th.bing.com/th/id/OIP.MoeGgyXqne_Vy_vt3KEtRAHaHZ?w=736&h=735&rs=1&pid=ImgDetMain",

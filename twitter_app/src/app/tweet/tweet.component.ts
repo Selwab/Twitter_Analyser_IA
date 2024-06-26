@@ -12,4 +12,14 @@ import { CommonModule } from '@angular/common';
 })
 export class TweetComponent {
   @Input() tweet!: Tweet;
+
+  sentiments_dict: { [key: number]: string } = {
+    1: 'Positive',
+    2: 'Neutral',
+    3: 'Negative'
+  };
+
+  getSentimentString(sentimentId: number): string {
+    return this.sentiments_dict[sentimentId] || 'Unknown';
+  }
 }

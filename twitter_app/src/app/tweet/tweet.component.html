@@ -1,7 +1,7 @@
 <form>
     <div class="tweet-containter">
         <div class="profile-picture">
-            <img src="assets/profile1.jpeg" alt="Foto de perfil">
+            <img src="assets/profile.jpg" alt="Foto de perfil">
         </div>
         <div class="tweet-body">
             <div class="tweet-header">
@@ -15,7 +15,7 @@
                 <img [src]="tweet.image_url" alt="Sentiment Image">
             </div>
             <div class="tweet-footer">
-              <span class="tweet-sentiment">Sentimiento: {{ tweet.sentiment_id }}</span>
+              <span class="tweet-sentiment">{{getSentimentString(tweet.sentiment_id)}}</span>
             </div>
         </div>    
     </div>
