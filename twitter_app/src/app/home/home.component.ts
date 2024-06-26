@@ -47,9 +47,9 @@ export class HomeComponent {
   contentInput: string = '';
   selectedSentiment: number = 0;
 
-  private positiveImages = ['assets/sentiments/positive/1.jpeg', 'assets/sentiments/positive/2.jpg', 'assets/sentiments/positive/3.jpg'];
-  private neutralImages = ['assets/sentiments/neutral/1.jpeg', 'assets/sentiments/neutral/2.png'];
-  private negativeImages = ['assets/sentiments/negative/1.jpg', 'assets/sentiments/negative/2.jpg', 'assets/sentiments/negative/3.jpg', 'assets/images/negative/4.jpg'];
+  ngOnInit() {
+    this.get_all_tweets();
+  }
 
   postTweet() {
     const payload = {
@@ -66,12 +66,19 @@ export class HomeComponent {
         time: new Date(),
       }
   
-      this.tweetsList.push(newTweet);
+      this.tweetsList.unshift(newTweet);
       this.tweetContent = this.contentInput;
       this.contentInput = '';
       console.log("Posted Tweets: ", saved_tweet);
     });
+  }
 
+  get_all_tweets() {
+    this.http.get<Tweet[]>(`${environment.apiUrl}/tweets`).subscribe((tweets) => {
+      console.log("Id: ", tweets);
+      this.tweetsList = tweets;
+      console.log("Fetched Tweets: ", this.tweetsList);
+    });
   }
 
   filterTweets() {

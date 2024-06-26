@@ -48,7 +48,12 @@ def save_tweet():
 @app.route('/tweets', methods=['GET'])
 def get_all_tweets():
     tweets = db.session.execute(db.select(Tweet)).scalars().all()
-    return jsonify([tweet.to_dict() for tweet in tweets])
+    tweets_with_images = []
+    for tweet in tweets:
+        tweet_to_dict = tweet.to_dict()
+        tweet_to_dict['image_url'] = get_image_url(tweet.image_id)
+        tweets_with_images.append(tweet_to_dict)
+    return jsonify(tweets_with_images)
 
 @app.route('/tweet', methods=['GET'])
 def get_tweet_by_id():
