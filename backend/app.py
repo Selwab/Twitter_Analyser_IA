@@ -4,12 +4,16 @@ from datetime import datetime
 from models import db, Tweet, Image
 from seeds import *
 import random
+import tensorflow as tf
 
 app = Flask(__name__) 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tweets.db'
 CORS(app, resources={r"/*": {"origins": "http://localhost:4200"}})
 
 db.init_app(app)
+print(tf.__version__)
+
+model = tf.keras.models.load_model('TweetAnalyzer.keras')
 
 def get_image_url(image_id):
     image = db.session.execute(db.select(Image).where(Image.id==image_id)).scalar_one()
@@ -20,10 +24,34 @@ def get_random_image_by_sentiment(sentiment_id):
     random_index = random.randint(0, len(images)-1)
     return images[random_index].id
 
+def predict_sentiment(text):
+    model_sentiments  = {
+        '0': 'negative',
+        '1': 'neutral',
+        '2': 'positive'
+    }
+
+    server_sentiments = {
+        'positive': 1,
+        'neutral': 2,
+        'negative': 3
+    }
+
+    predicted = model.predict([text])
+    print(predicted)
+    max =  max(predicted)
+    index = 0
+
+    for (percentage, i) in zip(predicted, range(len(predicted))):
+        if(percentage == max):
+            index = i 
+            break
+    return server_sentiments[model_sentiments[str(index)]]
+
 @app.route('/tweet', methods=['POST'])
 def save_tweet():
     data = request.get_json()
-#    predicted_sentiment = model.predict([data['text']])
+    predicted_sentiment = model.predict([data['text']])
     predicted_sentiment=2
     random_image =  get_random_image_by_sentiment(predicted_sentiment)
     new_tweet = Tweet(
