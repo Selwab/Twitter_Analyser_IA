@@ -16,13 +16,13 @@
                     </div>
                     <div class="input-area">
                       <form (ngSubmit)="postTweet()" #tweetForm="ngForm">
-                          <textarea [(ngModel)]="contentInput.value" required name="tweetContent" #tweetContent="ngModel" placeholder="What's happening?" rows="4" cols="50"></textarea>
+                          <textarea [formControl]="contentInput" placeholder="What's happening?" rows="4" cols="50"></textarea>
                           <div>
-                              <p class="error-message" *ngIf="tweetContent.errors?.['required']">Content is required.</p>
-                              <p class="error-message" *ngIf="tweetContent.errors?.['validate_input']">Please enter valid content (minimum 2 words, should contain letters).</p>
+                              <p class="error-message" *ngIf="tweetForm.errors?.['required']">Content is required.</p>
+                              <p class="error-message" *ngIf="tweetForm.errors?.['validate_input']">Please enter valid content (minimum 2 words, should contain letters).</p>
                           </div>
-                          <button type="submit" [disabled]="!tweetForm.form.valid && contentInput.errors?.['validate_input']" [class.disabled-button]="!tweetForm.form.valid" >Tweet</button>
-                      </form>
+                          <button type="submit" [disabled]="tweetForm.invalid">Tweet</button>
+                        </form>
                   </div>
                 </div>
                     <app-tweet-list [tweetsList]="tweetsList"></app-tweet-list>

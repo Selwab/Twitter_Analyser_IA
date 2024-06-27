@@ -56,8 +56,12 @@ export class HomeComponent {
   }
 
   postTweet() {
+    if(this.contentInput.invalid) {
+      console.log("Error: ", this.contentInput.errors);
+      return;
+    }
     const payload = {
-      text: this.contentInput,
+      text: this.contentInput.value,
       time: new Date(),
     }
 
