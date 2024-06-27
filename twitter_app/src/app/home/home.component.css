@@ -18,18 +18,18 @@
 
 .home-content {
     display: flex;
-    align-items: center; /* Centra verticalmente */
-    justify-content: center; /* Centra horizontalmente */
+    align-items: center;
+    justify-content: center;
     margin: 30px auto;
     font-family: "Segoe UI", sans-serif; 
-    border: 1px solid #ddd; /* Borde del input-area */
-    border-radius: 25px; /* Borde redondeado */
-    padding: 20px; /* Espaciado interno */
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    padding: 20px;
     width: fit-content;
 }
 
 .home-content:hover, .home-content:focus {
-  border-color: #1d9bf0; /* Cambio de color del borde al pasar el mouse o enfocar */
+  border-color: #1d9bf0;
 }
 
 .profile-picture {
@@ -49,8 +49,8 @@
   .input-area {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centra verticalmente */
-    align-items: center; /* Centra horizontalmente */
+    justify-content: center;
+    align-items: center;
     position: relative;
     width: 200%;
     max-width: 600px;
@@ -81,7 +81,7 @@
     color: #fff;
     cursor: pointer;
     transition: background-color 0.1s;
-    margin-left: auto; /* Asegura espacio entre el textarea y el botón */
+    margin-left: auto;
     outline: none;
 }
   
@@ -123,72 +123,81 @@
   }
 
   .mat-tab-group {
-    font-size: 18px; /* Aumenta el tamaño de la fuente */
-    width: 100%; /* Ancho completo del tab-group */
-    height: 100%; /* Altura completa del tab-group */
+    font-size: 18px;
+    width: 100%;
+    height: 100%;
   }
 
-  /* Personalización del mat-select */
 
 .filter-content {
     display: block;
     justify-content: center;
     align-items: center;
-    height: 100%; /* Ajusta la altura según sea necesario */
+    height: 100%;
   }
-  
-/* Estilos CSS personalizados para filtro */
 
 .filter-container {
-  width: 400px; /* Ancho del campo de formulario */
-  font-size: 20px; /* Tamaño de fuente */
+  width: 400px;
+  font-size: 20px;
   font-family: "Segoe UI", sans-serif; 
-  text-align: center; /* Centrar contenido */
+  text-align: center;
   margin: auto;
-  margin-top: 20px; /* Espaciado superior */
+  margin-top: 20px;
   margin-bottom: 20px;
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
 }
 
 .filter-container label {
-  display: block; /* Mostrar la etiqueta como bloque */
-  margin-bottom: 10px; /* Espaciado inferior */
-  font-size: 20px; /* Tamaño de fuente */
+  display: block;
+  margin-bottom: 10px;
+  font-size: 20px;
   font-family: "Segoe UI", sans-serif; 
-  color: black; /* Color azul celeste */
+  color: black;
 }
 
 .select-container {
-  border: 2px solid #1d9bf0; /* Borde del contenedor celeste */
-  border-radius: 10px; /* Borde redondeado */
-  padding: 10px; /* Relleno interno */
+  border: 2px solid #1d9bf0;
+  border-radius: 10px;
+  padding: 10px;
   width: 100%;
   display: inline-block;
   position: relative;
 }
 
 .select-container .mat-select {
-  width: 100%; /* Ancho completo del select */
-  height: 40px; /* Altura del select */
-  font-size: 18px; /* Tamaño de fuente */
-  padding: 10px; /* Relleno interno */
-  border: none; /* Quitar borde del select */
-  outline: none; /* Quitar contorno al enfocar */
-  background-color: #fff; /* Color de fondo */
-  font-family: "Segoe UI", sans-serif;  /* Fuente del selector */
+  width: 100%;
+  height: 40px;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+  outline: none;
+  background-color: #fff;
+  font-family: "Segoe UI", sans-serif;
 }
 
 .select-container option {
-  font-family: "Segoe UI", sans-serif; /* Fuente de las opciones */
-  font-size: 18px; /* Tamaño de fuente */
-  padding: 8px 16px; /* Relleno interno */
-  border: 1px solid #1d9bf0; /* Borde de cada opción */
-  border-radius: 5px; /* Borde redondeado de cada opción */
-  margin-bottom: 5px; /* Espaciado inferior entre opciones */
-  box-sizing: border-box; /* Asegura que el padding y border se incluyan en el ancho total */
+  font-family: "Segoe UI", sans-serif;
+  font-size: 18px;
+  padding: 8px 16px;
+  border: 1px solid #1d9bf0;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  box-sizing: border-box;
 }
 
 .select-container option:hover {
-  background-color: #1d9bf0; /* Color de fondo al pasar el mouse */
+  background-color: #1d9bf0;
   cursor: pointer;
+}
+
+/* Validations
+.disabled-button {
+  background-color: #cccccc;
+  color: #666666;
+}*/
+
+.error-message {
+  color: red;
+  margin-top: 5px;
+  font-family: "Segoe UI", sans-serif;
 }
