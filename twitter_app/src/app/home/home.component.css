@@ -138,7 +138,7 @@
 
 .filter-container {
   width: 400px;
-  font-size: 20px;
+  font-size: 30px;
   font-family: "Segoe UI", sans-serif; 
   text-align: center;
   margin: auto;
@@ -149,10 +149,12 @@
 
 .filter-container label {
   display: block;
-  margin-bottom: 10px;
-  font-size: 20px;
+  margin-bottom: 40px;
+  font-size: 25px;
+  font-weight: bold;
   font-family: "Segoe UI", sans-serif; 
-  color: black;
+  color: #1d9bf0;
+  border: none ;
 }
 
 .select-container {
