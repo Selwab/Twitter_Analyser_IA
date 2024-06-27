@@ -5,6 +5,7 @@ from models import db, Tweet, Image
 from seeds import *
 import random
 import tensorflow as tf
+import numpy as np
 
 app = Flask(__name__) 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tweets.db'
@@ -13,7 +14,8 @@ CORS(app, resources={r"/*": {"origins": "http://localhost:4200"}})
 db.init_app(app)
 print(tf.__version__)
 
-model = tf.keras.models.load_model('TweetAnalyzer.keras')
+model = tf.keras.models.load_model('.\TweetAnalyzer_2_16_1.keras')
+model.summary()
 
 def get_image_url(image_id):
     image = db.session.execute(db.select(Image).where(Image.id==image_id)).scalar_one()
@@ -36,23 +38,18 @@ def predict_sentiment(text):
         'neutral': 2,
         'negative': 3
     }
+    print(tf)
 
-    predicted = model.predict([text])
+    predicted = model.predict(tf.convert_to_tensor([text]))
     print(predicted)
-    max =  max(predicted)
-    index = 0
-
-    for (percentage, i) in zip(predicted, range(len(predicted))):
-        if(percentage == max):
-            index = i 
-            break
-    return server_sentiments[model_sentiments[str(index)]]
+    max_index = np.argmax(predicted)
+    print("SENT_ID: ",server_sentiments[model_sentiments[str(max_index)]])
+    return server_sentiments[model_sentiments[str(max_index)]]
 
 @app.route('/tweet', methods=['POST'])
 def save_tweet():
     data = request.get_json()
-    predicted_sentiment = model.predict([data['text']])
-    predicted_sentiment=2
+    predicted_sentiment = predict_sentiment(data['text'])
     random_image =  get_random_image_by_sentiment(predicted_sentiment)
     new_tweet = Tweet(
         text=data['text'],
