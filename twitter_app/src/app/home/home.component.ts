@@ -76,7 +76,6 @@ export class HomeComponent {
   
       this.tweetsList.unshift(newTweet);
       this.contentInput.reset();
-      console.log("Posted Tweets: ", saved_tweet);
     });
   }
 
@@ -106,21 +105,17 @@ export class HomeComponent {
   
   get_all_tweets() {
     this.http.get<Tweet[]>(`${environment.apiUrl}/tweets`).subscribe((tweets) => {
-      console.log("Id: ", tweets);
       tweets.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
       this.tweetsList = tweets;
-      console.log("Fetched Tweets: ", this.tweetsList);
     });
   }
 
   filterTweets() {
-    console.log("Selected Sentiment:", this.selectedSentiment);
     this.filteredTweets = [];
     for (const tweet of this.tweetsList) {
       if (tweet.sentiment_id == this.selectedSentiment) {
         this.filteredTweets.push(tweet);
       }
     }
-    console.log("Filtered Tweets: ", this.filteredTweets);
   }
 }
